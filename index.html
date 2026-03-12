@@ -1500,70 +1500,115 @@
 
     <!-- ==================== PROTECTION ==================== -->
     <script>
-        // === ANTI-COPY / ANTI-DEVTOOLS PROTECTION ===
+        // === MAXIMUM ANTI-COPY / ANTI-DEVTOOLS PROTECTION ===
         (function(){
-            // Block right-click
-            document.addEventListener('contextmenu', e => e.preventDefault());
+            var _killed = false;
+            var _msg = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0A0A0A;color:#C8956C;font-family:sans-serif;font-size:1.5rem;text-align:center;padding:2rem;direction:rtl;">תוכן זה מוגן. אין גישה לקוד המקור.</div>';
 
-            // Block text selection
-            document.addEventListener('selectstart', e => e.preventDefault());
+            function _nuke() {
+                if (_killed) return;
+                _killed = true;
+                document.documentElement.innerHTML = _msg;
+                // Also try to close the window
+                try { window.close(); } catch(e){}
+            }
 
-            // Block drag
-            document.addEventListener('dragstart', e => e.preventDefault());
+            // 1. Block right-click
+            document.addEventListener('contextmenu', function(e){ e.preventDefault(); e.stopPropagation(); return false; }, true);
 
-            // Block copy/cut/paste
-            ['copy','cut','paste'].forEach(evt => {
-                document.addEventListener(evt, e => e.preventDefault());
+            // 2. Block text selection
+            document.addEventListener('selectstart', function(e){ e.preventDefault(); return false; }, true);
+
+            // 3. Block drag
+            document.addEventListener('dragstart', function(e){ e.preventDefault(); return false; }, true);
+
+            // 4. Block copy/cut/paste
+            ['copy','cut','paste'].forEach(function(evt){
+                document.addEventListener(evt, function(e){ e.preventDefault(); return false; }, true);
             });
 
-            // Block keyboard shortcuts: F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S, Ctrl+A, Ctrl+P
+            // 5. Block ALL dangerous keyboard shortcuts
             document.addEventListener('keydown', function(e) {
-                // F12
-                if (e.key === 'F12') { e.preventDefault(); return false; }
-                // Ctrl+Shift combos (DevTools)
-                if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c','K','k'].includes(e.key)) { e.preventDefault(); return false; }
-                // Ctrl+U (view source)
-                if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) { e.preventDefault(); return false; }
-                // Ctrl+S (save)
-                if (e.ctrlKey && (e.key === 's' || e.key === 'S')) { e.preventDefault(); return false; }
-                // Ctrl+A (select all)
-                if (e.ctrlKey && (e.key === 'a' || e.key === 'A')) { e.preventDefault(); return false; }
-                // Ctrl+P (print)
-                if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); return false; }
-            });
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey) ||
+                    (e.ctrlKey && ['u','U','s','S','a','A','p','P','c','C','j','J'].includes(e.key)) ||
+                    (e.metaKey && e.altKey) ||
+                    (e.metaKey && ['u','U','s','S','a','A','p','P'].includes(e.key))
+                ) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }, true);
 
-            // Detect DevTools open (resize-based)
-            var _dt = false;
+            // 6. DevTools detection — toString trap (most reliable)
+            var _devOpen = false;
+            var _checkEl = new Image();
+            Object.defineProperty(_checkEl, 'id', {
+                get: function() { _devOpen = true; _nuke(); }
+            });
+            setInterval(function() {
+                _devOpen = false;
+                console.log('%c', _checkEl);
+                console.clear();
+            }, 1000);
+
+            // 7. DevTools detection — size-based (backup)
             setInterval(function(){
-                var w = window.outerWidth - window.innerWidth > 160;
-                var h = window.outerHeight - window.innerHeight > 160;
-                if(w || h){
-                    if(!_dt){ _dt = true; document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0A0A0A;color:#C8956C;font-family:sans-serif;font-size:2rem;text-align:center;padding:2rem;">אין גישה לקוד המקור של דף זה</div>'; }
-                } else { _dt = false; }
+                var wDiff = window.outerWidth - window.innerWidth > 120;
+                var hDiff = window.outerHeight - window.innerHeight > 120;
+                if (wDiff || hDiff) _nuke();
             }, 500);
 
-            // Nuke console
-            var _c = console;
-            Object.defineProperty(window, 'console', {
-                get: function(){
-                    throw new Error('Console disabled');
-                },
-                set: function(){}
+            // 8. DevTools detection — debugger timing
+            setInterval(function(){
+                var t1 = performance.now();
+                debugger;
+                var t2 = performance.now();
+                if (t2 - t1 > 50) _nuke();
+            }, 2000);
+
+            // 9. Nuke ALL console methods
+            var _noop = function(){};
+            var _methods = ['log','warn','error','info','debug','table','trace','dir','dirxml',
+                           'group','groupCollapsed','groupEnd','time','timeEnd','timeLog',
+                           'profile','profileEnd','count','countReset','assert','clear'];
+            _methods.forEach(function(m){
+                try { console[m] = _noop; } catch(e){}
             });
+            try {
+                Object.defineProperty(window, 'console', {
+                    get: function(){ return _methods.reduce(function(o,m){ o[m]=_noop; return o; }, {}); },
+                    set: _noop,
+                    configurable: false
+                });
+            } catch(e){}
 
-            // Debugger trap — slows down anyone who opens DevTools
-            (function _trap(){ debugger; setTimeout(_trap, 100); })();
-
-            // Block iframe embedding
+            // 10. Block iframe embedding
             if (window.top !== window.self) { window.top.location = window.self.location; }
 
-            // Disable print
-            window.addEventListener('beforeprint', function(e){
-                document.body.style.display = 'none';
+            // 11. Disable print
+            window.addEventListener('beforeprint', function(){ document.body.style.display = 'none'; });
+            window.addEventListener('afterprint', function(){ document.body.style.display = ''; });
+
+            // 12. Disable view-source by monitoring protocol
+            setInterval(function(){
+                if (window.location.protocol === 'view-source:') window.location.href = 'about:blank';
+            }, 500);
+
+            // 13. MutationObserver — detect if someone injects scripts
+            var _obs = new MutationObserver(function(mutations){
+                mutations.forEach(function(m){
+                    m.addedNodes.forEach(function(node){
+                        if (node.tagName === 'SCRIPT' && !node.src.includes('cdnjs') && !node.src.includes('unpkg')) {
+                            node.remove();
+                        }
+                    });
+                });
             });
-            window.addEventListener('afterprint', function(e){
-                document.body.style.display = '';
-            });
+            _obs.observe(document.documentElement, { childList: true, subtree: true });
+
         })();
     </script>
 
