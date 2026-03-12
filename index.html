@@ -18,8 +18,8 @@
            PREMIUM FONT — Kissufim FS
            =========================== */
         @font-face {
-            font-family: 'Kissufim FS';
-            src: url('fonts/KissufimFS-VF.woff2') format('woff2-variations');
+            font-family: 'Discovery FS';
+            src: url('fonts/Discovery_Fs-VF.woff2') format('woff2-variations');
             font-weight: 100 900;
             font-display: swap;
         }
@@ -45,7 +45,7 @@
             --text-dark: #0A0A0A;
             --text-muted: #6B6560;
             --text-muted-light: #B5AEA6;
-            --font: 'Kissufim FS', 'Heebo', sans-serif;
+            --font: 'Discovery FS', 'Heebo', sans-serif;
         }
 
         html {
@@ -1525,19 +1525,16 @@
                 });
             });
 
-            // Staggered reveals
-            gsap.utils.toArray('.stagger-items').forEach(container => {
-                const items = container.querySelectorAll('[data-item]');
-                if (!items.length) return;
-                gsap.from(items, {
+            // Staggered reveals — animate each item individually for bento grids
+            gsap.utils.toArray('[data-item]').forEach((item, i) => {
+                gsap.from(item, {
                     y: 40,
                     opacity: 0,
                     duration: 0.7,
                     ease: 'power3.out',
-                    stagger: 0.12,
                     scrollTrigger: {
-                        trigger: container,
-                        start: 'top 85%',
+                        trigger: item,
+                        start: 'top 92%',
                         toggleActions: 'play none none none',
                     }
                 });
