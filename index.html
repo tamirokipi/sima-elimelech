@@ -15,7 +15,7 @@
 
     <style>
         /* ===========================
-           PREMIUM FONT — Kissufim FS
+           PREMIUM FONT — Discovery FS
            =========================== */
         @font-face {
             font-family: 'Discovery FS';
@@ -345,6 +345,18 @@
             color: var(--text-muted-light);
             margin-top: 0.25rem;
             line-height: 1.3;
+        }
+
+        .hero-watermark {
+            position: absolute;
+            z-index: 1;
+            font-size: clamp(4rem, 8vw, 7rem);
+            font-weight: 900;
+            color: rgba(200, 149, 108, 0.04);
+            letter-spacing: -0.04em;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
         }
 
         .hero-line {
@@ -1128,7 +1140,7 @@
     <!-- ==================== HERO ==================== -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <span class="hero-label" data-reveal>נקודת מפנה</span>
+            <span class="hero-label" data-reveal>נקודת מפנה | סימה אלימלך</span>
             <h1 class="hero-title" data-reveal>
                 את מרגישה שהכל <em>תקוע</em>.
                 <span class="line2">זה בדיוק הרגע לשינוי.</span>
@@ -1141,7 +1153,7 @@
                     <span>אני רוצה להתחיל</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </a>
-                <a href="#process" class="btn-ghost">
+                <a href="#pain" class="btn-ghost">
                     <span>מה תקבלי בתהליך</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
                 </a>
@@ -1149,6 +1161,7 @@
         </div>
         <div class="hero-visual" aria-hidden="true">
             <div class="hero-blob"></div>
+            <span class="hero-watermark">נקודת מפנה</span>
             <div class="hero-badge" data-reveal>
                 <span class="number">15+</span>
                 <span class="label">שנות ניסיון<br>בשטח</span>
@@ -1267,7 +1280,10 @@
                         <span class="thin">אמיתית עם אנשים</span>
                     </h2>
                     <p class="authority-bio" data-reveal>
-                        אני סימה אלימלך, ואני מלווה אנשים כבר שנה וחצי עשורים — בליווי פרטני ובמסגרות עירוניות וקהילתיות. עבדתי עם בני נוער, הורים ומבוגרים, ואני מתמחה בהעצמה אישית, בהתמודדות עם חרדות ובתקשורת בין־אישית. אני לא מלמדת תיאוריה. אני נותנת כלים שעובדים — מניסיון ישיר עם עשרות אנשים שהיו בדיוק במקום שלך.
+                        אני סימה אלימלך, ואני מלווה אנשים כבר שנה וחצי עשורים — בליווי פרטני ובמסגרות עירוניות וקהילתיות. עבדתי עם בני נוער, הורים ומבוגרים, ואני מתמחה בהעצמה אישית, בהתמודדות עם חרדות ובתקשורת בין־אישית.
+                    </p>
+                    <p class="authority-bio" data-reveal>
+                        אני לא מלמדת תיאוריה. אני נותנת כלים שעובדים — מניסיון ישיר עם עשרות אנשים שהיו בדיוק במקום שלך.
                     </p>
                     <div class="authority-tags stagger-items" data-reveal>
                         <span class="authority-tag" data-item>העצמה אישית</span>
