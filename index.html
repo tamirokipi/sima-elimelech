@@ -33,6 +33,15 @@
             box-sizing: border-box;
         }
 
+        /* Anti-copy protection */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
         :root {
             --black: #0A0A0A;
             --black-soft: #141414;
@@ -1488,6 +1497,75 @@
             <p class="footer-text">&copy; 2025 נקודת מפנה | סימה אלימלך. כל הזכויות שמורות.</p>
         </div>
     </footer>
+
+    <!-- ==================== PROTECTION ==================== -->
+    <script>
+        // === ANTI-COPY / ANTI-DEVTOOLS PROTECTION ===
+        (function(){
+            // Block right-click
+            document.addEventListener('contextmenu', e => e.preventDefault());
+
+            // Block text selection
+            document.addEventListener('selectstart', e => e.preventDefault());
+
+            // Block drag
+            document.addEventListener('dragstart', e => e.preventDefault());
+
+            // Block copy/cut/paste
+            ['copy','cut','paste'].forEach(evt => {
+                document.addEventListener(evt, e => e.preventDefault());
+            });
+
+            // Block keyboard shortcuts: F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S, Ctrl+A, Ctrl+P
+            document.addEventListener('keydown', function(e) {
+                // F12
+                if (e.key === 'F12') { e.preventDefault(); return false; }
+                // Ctrl+Shift combos (DevTools)
+                if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c','K','k'].includes(e.key)) { e.preventDefault(); return false; }
+                // Ctrl+U (view source)
+                if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) { e.preventDefault(); return false; }
+                // Ctrl+S (save)
+                if (e.ctrlKey && (e.key === 's' || e.key === 'S')) { e.preventDefault(); return false; }
+                // Ctrl+A (select all)
+                if (e.ctrlKey && (e.key === 'a' || e.key === 'A')) { e.preventDefault(); return false; }
+                // Ctrl+P (print)
+                if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); return false; }
+            });
+
+            // Detect DevTools open (resize-based)
+            var _dt = false;
+            setInterval(function(){
+                var w = window.outerWidth - window.innerWidth > 160;
+                var h = window.outerHeight - window.innerHeight > 160;
+                if(w || h){
+                    if(!_dt){ _dt = true; document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0A0A0A;color:#C8956C;font-family:sans-serif;font-size:2rem;text-align:center;padding:2rem;">אין גישה לקוד המקור של דף זה</div>'; }
+                } else { _dt = false; }
+            }, 500);
+
+            // Nuke console
+            var _c = console;
+            Object.defineProperty(window, 'console', {
+                get: function(){
+                    throw new Error('Console disabled');
+                },
+                set: function(){}
+            });
+
+            // Debugger trap — slows down anyone who opens DevTools
+            (function _trap(){ debugger; setTimeout(_trap, 100); })();
+
+            // Block iframe embedding
+            if (window.top !== window.self) { window.top.location = window.self.location; }
+
+            // Disable print
+            window.addEventListener('beforeprint', function(e){
+                document.body.style.display = 'none';
+            });
+            window.addEventListener('afterprint', function(e){
+                document.body.style.display = '';
+            });
+        })();
+    </script>
 
     <!-- ==================== SCRIPTS ==================== -->
     <script>
