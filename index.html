@@ -6,11 +6,6 @@
     <title>סימה אלימלך | נקודת מפנה — אימון אישי והעצמה</title>
     <meta name="description" content="תהליך אימון אישי שנותן כלים אמיתיים לצאת מעומס מחשבות, חרדות ותחושת תקיעות. סימה אלימלך — 15 שנות ניסיון בשטח.">
 
-    <!-- Preload Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-
     <!-- GSAP + ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -19,6 +14,16 @@
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
 
     <style>
+        /* ===========================
+           PREMIUM FONT — Kissufim FS
+           =========================== */
+        @font-face {
+            font-family: 'Kissufim FS';
+            src: url('fonts/KissufimFS-VF.woff2') format('woff2-variations');
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
         /* ===========================
            RESET & BASE
            =========================== */
@@ -31,14 +36,16 @@
         :root {
             --black: #0A0A0A;
             --black-soft: #141414;
+            --black-mid: #1E1E1E;
             --cream: #F5EDE4;
             --cream-light: #FEFDFB;
             --copper: #C8956C;
             --copper-light: #E8A87C;
             --copper-dark: #A67A52;
-            --text-muted: #8A8279;
+            --text-dark: #0A0A0A;
+            --text-muted: #6B6560;
             --text-muted-light: #B5AEA6;
-            --font: 'Heebo', sans-serif;
+            --font: 'Kissufim FS', 'Heebo', sans-serif;
         }
 
         html {
@@ -56,23 +63,9 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button {
-            font-family: var(--font);
-            cursor: pointer;
-            border: none;
-            background: none;
-        }
+        img { max-width: 100%; height: auto; display: block; }
+        a { color: inherit; text-decoration: none; }
+        button { font-family: var(--font); cursor: pointer; border: none; background: none; }
 
         /* ===========================
            UTILITIES
@@ -84,17 +77,8 @@
             padding-inline: clamp(1.25rem, 4vw, 3rem);
         }
 
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-            clip: rect(0 0 0 0);
-            white-space: nowrap;
-        }
-
         /* ===========================
-           HEADER / NAV
+           HEADER
            =========================== */
         .site-header {
             position: fixed;
@@ -123,15 +107,13 @@
         }
 
         .logo {
-            font-weight: 900;
+            font-weight: 700;
             font-size: 1.125rem;
             letter-spacing: -0.02em;
             color: var(--cream);
         }
 
-        .logo span {
-            color: var(--copper);
-        }
+        .logo span { color: var(--copper); }
 
         .nav-cta {
             display: inline-flex;
@@ -158,12 +140,10 @@
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .nav-cta:hover svg {
-            transform: translateX(-3px);
-        }
+        .nav-cta:hover svg { transform: translateX(-3px); }
 
         /* ===========================
-           HERO SECTION
+           HERO
            =========================== */
         .hero {
             min-height: 100svh;
@@ -184,41 +164,49 @@
             z-index: 2;
         }
 
-        .hero-eyebrow {
-            font-size: clamp(0.75rem, 1vw, 0.875rem);
+        .hero-label {
+            display: inline-block;
+            font-size: clamp(0.8125rem, 1vw, 0.9375rem);
             font-weight: 500;
-            letter-spacing: 0.15em;
             color: var(--copper);
-            text-transform: uppercase;
+            background: rgba(200, 149, 108, 0.08);
+            border: 1px solid rgba(200, 149, 108, 0.15);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
             margin-bottom: 2rem;
+            width: fit-content;
             opacity: 0;
         }
 
         .hero-title {
             font-size: clamp(2.5rem, 5.5vw, 5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
             color: var(--cream);
             margin-bottom: 1.75rem;
             opacity: 0;
         }
 
-        .hero-title .accent {
+        .hero-title em {
+            font-style: normal;
             color: var(--copper);
+        }
+
+        .hero-title .line2 {
             display: block;
             font-weight: 300;
-            font-size: 0.65em;
-            letter-spacing: -0.01em;
-            margin-top: 0.25em;
+            font-size: 0.7em;
+            margin-top: 0.2em;
+            color: var(--cream);
         }
 
         .hero-desc {
-            font-size: clamp(1rem, 1.25vw, 1.2rem);
-            font-weight: 300;
-            line-height: 1.8;
+            font-size: clamp(1rem, 1.25vw, 1.1875rem);
+            font-weight: 400;
+            line-height: 1.85;
             color: var(--text-muted-light);
-            max-width: 520px;
+            max-width: 540px;
             margin-bottom: 2.5rem;
             opacity: 0;
         }
@@ -231,6 +219,7 @@
             opacity: 0;
         }
 
+        /* Buttons */
         .btn-primary {
             display: inline-flex;
             align-items: center;
@@ -257,12 +246,9 @@
             border-radius: inherit;
         }
 
-        .btn-primary:hover::before {
-            transform: scaleX(1);
-        }
+        .btn-primary:hover::before { transform: scaleX(1); }
 
-        .btn-primary span,
-        .btn-primary svg {
+        .btn-primary span, .btn-primary svg {
             position: relative;
             z-index: 1;
         }
@@ -278,9 +264,7 @@
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .btn-primary:hover svg {
-            transform: translateX(-4px);
-        }
+        .btn-primary:hover svg { transform: translateX(-4px); }
 
         .btn-ghost {
             display: inline-flex;
@@ -293,21 +277,11 @@
             transition: color 0.3s ease;
         }
 
-        .btn-ghost:hover {
-            color: var(--copper-light);
-        }
+        .btn-ghost:hover { color: var(--copper-light); }
+        .btn-ghost svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+        .btn-ghost:hover svg { transform: translateY(3px); }
 
-        .btn-ghost svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s ease;
-        }
-
-        .btn-ghost:hover svg {
-            transform: translateY(3px);
-        }
-
-        /* Hero visual side */
+        /* Hero visual */
         .hero-visual {
             position: relative;
             display: flex;
@@ -378,10 +352,7 @@
             bottom: 0;
             inset-inline: 0;
             height: 1px;
-            background: linear-gradient(to left,
-                transparent,
-                rgba(200, 149, 108, 0.3),
-                transparent);
+            background: linear-gradient(to left, transparent, rgba(200, 149, 108, 0.3), transparent);
         }
 
         /* ===========================
@@ -427,15 +398,8 @@
         }
 
         /* ===========================
-           PAIN POINTS
+           SECTION SHARED
            =========================== */
-        .pain-section {
-            background: var(--cream);
-            color: var(--black);
-            padding: clamp(5rem, 10vh, 9rem) 0;
-            position: relative;
-        }
-
         .section-label {
             font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
             font-weight: 700;
@@ -443,6 +407,15 @@
             text-transform: uppercase;
             color: var(--copper-dark);
             margin-bottom: 1rem;
+        }
+
+        /* ===========================
+           PAIN POINTS
+           =========================== */
+        .pain-section {
+            background: var(--cream);
+            color: var(--text-dark);
+            padding: clamp(5rem, 10vh, 9rem) 0;
         }
 
         .pain-header {
@@ -455,21 +428,20 @@
 
         .pain-title {
             font-size: clamp(2.25rem, 4.5vw, 4rem);
-            font-weight: 900;
+            font-weight: 700;
             line-height: 1.1;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
         }
 
         .pain-subtitle {
             font-size: clamp(1rem, 1.2vw, 1.125rem);
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-muted);
             line-height: 1.7;
             align-self: end;
             padding-bottom: 0.5rem;
         }
 
-        /* Bento layout — NOT equal cards */
         .pain-grid {
             display: grid;
             grid-template-columns: 1.3fr 0.85fr 0.85fr;
@@ -497,9 +469,7 @@
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .pain-card:hover::before {
-            transform: scaleX(1);
-        }
+        .pain-card:hover::before { transform: scaleX(1); }
 
         .pain-card:hover {
             background: #fff;
@@ -507,7 +477,6 @@
             box-shadow: 0 20px 60px rgba(10, 10, 10, 0.08);
         }
 
-        /* First card is larger */
         .pain-card:first-child {
             grid-row: 1 / 3;
             display: flex;
@@ -533,13 +502,13 @@
 
         .pain-card-desc {
             font-size: clamp(0.875rem, 1vw, 0.9375rem);
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-muted);
-            line-height: 1.7;
+            line-height: 1.75;
         }
 
         /* ===========================
-           PROMISE / TRANSFORMATION
+           PROMISE
            =========================== */
         .promise-section {
             background: var(--black);
@@ -555,23 +524,21 @@
             align-items: start;
         }
 
-        .promise-text .section-label {
-            color: var(--copper-light);
-        }
+        .promise-text .section-label { color: var(--copper-light); }
 
         .promise-title {
             font-size: clamp(2.25rem, 4.5vw, 4rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
             color: var(--cream);
             margin-bottom: 1.5rem;
         }
 
         .promise-desc {
             font-size: clamp(1rem, 1.15vw, 1.0625rem);
-            font-weight: 300;
-            line-height: 1.8;
+            font-weight: 400;
+            line-height: 1.85;
             color: var(--text-muted-light);
             margin-bottom: 2.5rem;
         }
@@ -581,7 +548,7 @@
             padding-inline-end: 1.5rem;
             font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
             font-weight: 500;
-            line-height: 1.6;
+            line-height: 1.7;
             color: var(--cream);
             font-style: italic;
         }
@@ -631,19 +598,18 @@
 
         .promise-card-desc {
             font-size: 0.875rem;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-muted-light);
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         /* ===========================
-           AUTHORITY / ABOUT
+           AUTHORITY
            =========================== */
         .authority-section {
             background: var(--cream);
-            color: var(--black);
+            color: var(--text-dark);
             padding: clamp(5rem, 10vh, 9rem) 0;
-            position: relative;
         }
 
         .authority-layout {
@@ -655,10 +621,15 @@
 
         .authority-title {
             font-size: clamp(2.25rem, 4.5vw, 4rem);
-            font-weight: 900;
+            font-weight: 700;
             line-height: 1.1;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
             margin-bottom: 2rem;
+        }
+
+        .authority-title em {
+            font-style: normal;
+            color: var(--copper-dark);
         }
 
         .authority-title .thin {
@@ -668,11 +639,11 @@
 
         .authority-bio {
             font-size: clamp(1rem, 1.15vw, 1.0625rem);
-            font-weight: 300;
-            line-height: 1.8;
+            font-weight: 400;
+            line-height: 1.85;
             color: var(--text-muted);
             margin-bottom: 2.5rem;
-            max-width: 620px;
+            max-width: 640px;
         }
 
         .authority-tags {
@@ -691,9 +662,7 @@
             transition: all 0.3s ease;
         }
 
-        .authority-tag:hover {
-            background: var(--copper-dark);
-        }
+        .authority-tag:hover { background: var(--copper-dark); }
 
         .authority-stats {
             display: grid;
@@ -712,9 +681,7 @@
             transition: background 0.3s ease;
         }
 
-        .stat-cell:hover {
-            background: #fff;
-        }
+        .stat-cell:hover { background: #fff; }
 
         .stat-num {
             font-size: clamp(2rem, 3vw, 2.75rem);
@@ -732,24 +699,33 @@
         }
 
         /* ===========================
-           PROCESS / STEPS
+           PROCESS
            =========================== */
         .process-section {
             background: var(--black-soft);
             padding: clamp(5rem, 10vh, 9rem) 0;
-            position: relative;
         }
 
         .process-header {
             text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .process-subtitle {
+            text-align: center;
+            font-size: clamp(1rem, 1.15vw, 1.0625rem);
+            font-weight: 400;
+            color: var(--text-muted-light);
             margin-bottom: clamp(3.5rem, 7vh, 5rem);
+            max-width: 560px;
+            margin-inline: auto;
         }
 
         .process-title {
             font-size: clamp(2.25rem, 4.5vw, 4rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
             color: var(--cream);
         }
 
@@ -762,18 +738,14 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 0;
-            position: relative;
         }
 
         .process-step {
             padding: clamp(2rem, 3vw, 3rem);
-            position: relative;
             border-inline-end: 1px solid rgba(200, 149, 108, 0.1);
         }
 
-        .process-step:last-child {
-            border-inline-end: none;
-        }
+        .process-step:last-child { border-inline-end: none; }
 
         .step-num {
             font-size: clamp(5rem, 8vw, 7rem);
@@ -793,12 +765,11 @@
 
         .step-desc {
             font-size: clamp(0.875rem, 1vw, 0.9375rem);
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-muted-light);
-            line-height: 1.7;
+            line-height: 1.75;
         }
 
-        /* Extras row */
         .process-extras {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -810,8 +781,8 @@
 
         .extra-item {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
         .extra-icon {
@@ -831,10 +802,17 @@
             color: var(--copper);
         }
 
-        .extra-text {
-            font-size: 0.9375rem;
-            font-weight: 500;
+        .extra-title {
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--cream);
+        }
+
+        .extra-desc {
+            font-size: 0.8125rem;
+            font-weight: 400;
+            color: var(--text-muted-light);
+            line-height: 1.6;
         }
 
         /* ===========================
@@ -842,7 +820,7 @@
            =========================== */
         .testimonials-section {
             background: var(--cream);
-            color: var(--black);
+            color: var(--text-dark);
             padding: clamp(5rem, 10vh, 9rem) 0;
         }
 
@@ -850,11 +828,20 @@
             margin-bottom: clamp(3rem, 6vh, 5rem);
         }
 
+        .testimonials-label {
+            font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--copper-dark);
+            margin-bottom: 1rem;
+        }
+
         .testimonials-title {
             font-size: clamp(2.25rem, 4.5vw, 4rem);
-            font-weight: 900;
+            font-weight: 700;
             line-height: 1.1;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
         }
 
         .testimonials-title .thin {
@@ -862,7 +849,6 @@
             display: block;
         }
 
-        /* Asymmetric testimonial grid */
         .testimonials-grid {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr 1fr;
@@ -878,9 +864,7 @@
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .testimonial-card:nth-child(2) {
-            margin-top: 2.5rem;
-        }
+        .testimonial-card:nth-child(2) { margin-top: 2.5rem; }
 
         .testimonial-card:hover {
             background: #fff;
@@ -903,7 +887,7 @@
         .testimonial-quote {
             font-size: clamp(0.9375rem, 1.05vw, 1rem);
             font-weight: 400;
-            line-height: 1.75;
+            line-height: 1.8;
             color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
@@ -929,16 +913,8 @@
             color: var(--black);
         }
 
-        .author-name {
-            font-weight: 700;
-            font-size: 0.9375rem;
-        }
-
-        .author-role {
-            font-size: 0.8125rem;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
+        .author-name { font-weight: 700; font-size: 0.9375rem; }
+        .author-role { font-size: 0.8125rem; color: var(--text-muted); font-weight: 400; }
 
         /* ===========================
            FINAL CTA
@@ -956,9 +932,7 @@
             width: 600px;
             height: 600px;
             border-radius: 50%;
-            background: radial-gradient(circle,
-                rgba(200, 149, 108, 0.08) 0%,
-                transparent 70%);
+            background: radial-gradient(circle, rgba(200, 149, 108, 0.08) 0%, transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -974,17 +948,17 @@
 
         .cta-title {
             font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
             color: var(--cream);
             margin-bottom: 1.5rem;
         }
 
         .cta-desc {
             font-size: clamp(1rem, 1.2vw, 1.125rem);
-            font-weight: 300;
-            line-height: 1.8;
+            font-weight: 400;
+            line-height: 1.85;
             color: var(--text-muted-light);
             margin-bottom: 1rem;
         }
@@ -999,11 +973,7 @@
             margin-bottom: 2.5rem;
         }
 
-        .cta-note svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
+        .cta-note svg { width: 16px; height: 16px; flex-shrink: 0; }
 
         .cta-btn {
             display: inline-flex;
@@ -1031,25 +1001,16 @@
             border-radius: inherit;
         }
 
-        .cta-btn:hover::before {
-            transform: scaleX(1);
-        }
+        .cta-btn:hover::before { transform: scaleX(1); }
 
-        .cta-btn span,
-        .cta-btn svg {
-            position: relative;
-            z-index: 1;
-        }
+        .cta-btn span, .cta-btn svg { position: relative; z-index: 1; }
 
         .cta-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 16px 48px rgba(200, 149, 108, 0.3);
         }
 
-        .cta-btn svg {
-            width: 20px;
-            height: 20px;
-        }
+        .cta-btn svg { width: 20px; height: 20px; }
 
         .cta-socials {
             display: flex;
@@ -1074,11 +1035,7 @@
             border-color: var(--copper);
         }
 
-        .social-link svg {
-            width: 18px;
-            height: 18px;
-            color: var(--copper);
-        }
+        .social-link svg { width: 18px; height: 18px; color: var(--copper); }
 
         /* ===========================
            FOOTER
@@ -1092,146 +1049,66 @@
 
         .footer-text {
             font-size: 0.8125rem;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-muted);
         }
 
         /* ===========================
-           MOBILE RESPONSIVE
+           RESPONSIVE
            =========================== */
         @media (max-width: 1024px) {
             .hero {
                 grid-template-columns: 1fr;
                 min-height: auto;
             }
-
             .hero-content {
                 padding: clamp(7rem, 14vh, 10rem) clamp(1.5rem, 5vw, 3rem) 3rem;
             }
-
-            .hero-visual {
-                display: none;
-            }
-
-            .pain-header {
-                grid-template-columns: 1fr;
-            }
-
-            .pain-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pain-card:first-child {
-                grid-row: auto;
-            }
-
-            .promise-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .authority-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .authority-stats {
-                max-width: 400px;
-            }
-
-            .process-steps {
-                grid-template-columns: 1fr;
-            }
-
+            .hero-visual { display: none; }
+            .pain-header { grid-template-columns: 1fr; }
+            .pain-grid { grid-template-columns: 1fr; }
+            .pain-card:first-child { grid-row: auto; }
+            .promise-layout { grid-template-columns: 1fr; }
+            .authority-layout { grid-template-columns: 1fr; }
+            .authority-stats { max-width: 400px; }
+            .process-steps { grid-template-columns: 1fr; }
             .process-step {
                 border-inline-end: none;
                 border-bottom: 1px solid rgba(200, 149, 108, 0.1);
             }
-
-            .process-step:last-child {
-                border-bottom: none;
-            }
-
-            .process-extras {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .testimonial-card:nth-child(2) {
-                margin-top: 0;
-            }
+            .process-step:last-child { border-bottom: none; }
+            .process-extras { grid-template-columns: 1fr 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .testimonial-card:nth-child(2) { margin-top: 0; }
         }
 
         @media (max-width: 640px) {
-            .hero-content {
-                padding: 6.5rem 1.25rem 2.5rem;
-            }
+            .hero-content { padding: 6.5rem 1.25rem 2.5rem; }
+            .hero-title { font-size: clamp(2rem, 9vw, 2.75rem); }
+            .hero-actions { flex-direction: column; align-items: stretch; }
+            .btn-primary { justify-content: center; min-height: 56px; }
+            .btn-ghost { justify-content: center; }
 
-            .hero-title {
-                font-size: clamp(2rem, 9vw, 2.75rem);
-            }
-
-            .hero-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .btn-primary {
-                justify-content: center;
-                min-height: 56px;
-            }
-
-            .btn-ghost {
-                justify-content: center;
-            }
-
-            .pain-title,
-            .promise-title,
-            .authority-title,
-            .process-title,
-            .testimonials-title,
-            .cta-title {
+            .pain-title, .promise-title, .authority-title,
+            .process-title, .testimonials-title, .cta-title {
                 font-size: clamp(1.75rem, 8vw, 2.5rem);
             }
 
-            .pain-num {
-                font-size: 3.5rem;
-            }
-
-            .step-num {
-                font-size: 4rem;
-            }
-
-            .promise-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .process-extras {
-                grid-template-columns: 1fr;
-            }
-
-            .authority-stats {
-                max-width: 100%;
-            }
-
-            .cta-btn {
-                width: 100%;
-                justify-content: center;
-                min-height: 56px;
-            }
+            .pain-num { font-size: 3.5rem; }
+            .step-num { font-size: 4rem; }
+            .promise-cards { grid-template-columns: 1fr; }
+            .process-extras { grid-template-columns: 1fr; }
+            .authority-stats { max-width: 100%; }
+            .cta-btn { width: 100%; justify-content: center; min-height: 56px; }
         }
 
-        /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            .marquee-track {
-                animation: none;
-            }
+            .marquee-track { animation: none; }
         }
     </style>
 </head>
@@ -1240,15 +1117,10 @@
     <!-- ==================== HEADER ==================== -->
     <header class="site-header" id="siteHeader">
         <div class="container header-inner">
-            <a href="#" class="logo" aria-label="סימה אלימלך - נקודת מפנה">
-                נקודת <span>מפנה</span>
-            </a>
+            <a href="#" class="logo" aria-label="סימה אלימלך - נקודת מפנה">נקודת <span>מפנה</span></a>
             <a href="#contact" class="nav-cta">
                 <span>לשיחה ראשונה</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             </a>
         </div>
     </header>
@@ -1256,28 +1128,22 @@
     <!-- ==================== HERO ==================== -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <p class="hero-eyebrow" data-reveal>סימה אלימלך — אימון אישי והעצמה</p>
+            <span class="hero-label" data-reveal>נקודת מפנה</span>
             <h1 class="hero-title" data-reveal>
-                את מרגישה שהכל תקוע.
-                <span class="accent">זה בדיוק הרגע לשינוי.</span>
+                את מרגישה שהכל <em>תקוע</em>.
+                <span class="line2">זה בדיוק הרגע לשינוי.</span>
             </h1>
             <p class="hero-desc" data-reveal>
-                תהליך אימון אישי שנותן כלים אמיתיים לצאת מעומס מחשבות, מחוסר ביטחון ומתחושת תקיעות — ולהתחיל לחיות אחרת. בקצב שלך, עם ליווי צמוד ואישי.
+                תהליך אימון אישי שנותן כלים אמיתיים לצאת מעומס מחשבות, לחזק ביטחון עצמי וליצור חיים עם שקט פנימי — כבר אחרי מספר מפגשים.
             </p>
             <div class="hero-actions" data-reveal>
                 <a href="#contact" class="btn-primary" data-magnetic>
                     <span>אני רוצה להתחיל</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </a>
                 <a href="#process" class="btn-ghost">
                     <span>מה תקבלי בתהליך</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <polyline points="19 12 12 19 5 12"></polyline>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
                 </a>
             </div>
         </div>
@@ -1299,18 +1165,14 @@
             <span class="marquee-item"><span class="marquee-dot"></span>תקשורת בין־אישית</span>
             <span class="marquee-item"><span class="marquee-dot"></span>הצבת גבולות</span>
             <span class="marquee-item"><span class="marquee-dot"></span>ביטחון עצמי</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>ניהול רגשות</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>מיקוד ובהירות</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>שינוי דפוסים</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>שקט פנימי</span>
             <!-- Duplicate for seamless loop -->
             <span class="marquee-item"><span class="marquee-dot"></span>העצמה אישית</span>
             <span class="marquee-item"><span class="marquee-dot"></span>התמודדות עם חרדות</span>
             <span class="marquee-item"><span class="marquee-dot"></span>תקשורת בין־אישית</span>
             <span class="marquee-item"><span class="marquee-dot"></span>הצבת גבולות</span>
             <span class="marquee-item"><span class="marquee-dot"></span>ביטחון עצמי</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>ניהול רגשות</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>מיקוד ובהירות</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>שינוי דפוסים</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>שקט פנימי</span>
         </div>
     </div>
 
@@ -1322,33 +1184,24 @@
                     <p class="section-label" data-reveal>הכאב</p>
                     <h2 class="pain-title" data-reveal>את לא לבד בזה</h2>
                 </div>
-                <p class="pain-subtitle" data-reveal>
-                    הדברים שאני שומעת בכל שיחה ראשונה.<br>
-                    אם את מזהה את עצמך — את בדיוק במקום הנכון.
-                </p>
+                <p class="pain-subtitle" data-reveal>הדברים שאני שומעת בכל שיחה ראשונה</p>
             </div>
 
             <div class="pain-grid stagger-items">
                 <div class="pain-card" data-item>
                     <span class="pain-num">01</span>
                     <h3 class="pain-card-title">עומס מחשבות שלא נעצר</h3>
-                    <p class="pain-card-desc">
-                        הראש לא מפסיק. מחשבות רצות בלולאה, תרחישים שלא קורים, דאגות שלא נגמרות. את מרגישה עייפה מלחשוב — אבל לא מצליחה לעצור. בלילה זה מחמיר, וביום את פשוט ממשיכה על אוטומט.
-                    </p>
+                    <p class="pain-card-desc">הראש לא מפסיק. מחשבות חוזרות, ספקות, תרחישים — ואין רגע של שקט אמיתי. את מרגישה שאת עובדת על עצמך כל הזמן אבל שום דבר לא זז.</p>
                 </div>
                 <div class="pain-card" data-item>
                     <span class="pain-num">02</span>
                     <h3 class="pain-card-title">חוסר ביטחון שמשתק</h3>
-                    <p class="pain-card-desc">
-                        את מפקפקת בכל החלטה, מרגישה שאת לא מספיק טובה, ומוותרת על דברים שבאמת חשובים לך.
-                    </p>
+                    <p class="pain-card-desc">קשה לך לקבל החלטות. את חוששת מטעויות. יש תחושה עמוקה של "אני לא מספיק טובה" שמלווה אותך בעבודה, ביחסים, בכל מקום.</p>
                 </div>
                 <div class="pain-card" data-item>
                     <span class="pain-num">03</span>
                     <h3 class="pain-card-title">תחושה שהחיים תקועים</h3>
-                    <p class="pain-card-desc">
-                        את יודעת שמשהו צריך להשתנות, אבל לא יודעת מאיפה להתחיל. בלבול, מבוי סתום, ותחושת הצפה רגשית.
-                    </p>
+                    <p class="pain-card-desc">את יודעת שמשהו צריך להשתנות, אבל לא יודעת מאיפה להתחיל. יש בלבול, עומס רגשי, וקושי להציב גבולות עם אנשים קרובים.</p>
                 </div>
             </div>
         </div>
@@ -1360,61 +1213,43 @@
             <div class="promise-layout">
                 <div class="promise-text">
                     <p class="section-label" data-reveal>מה ישתנה</p>
-                    <h2 class="promise-title" data-reveal>
-                        תוך שבועות<br>תרגישי את ההבדל
-                    </h2>
+                    <h2 class="promise-title" data-reveal>תוך שבועות תרגישי את ההבדל.</h2>
                     <p class="promise-desc" data-reveal>
-                        השינוי לא קורה ביום אחד — אבל הוא קורה הרבה יותר מהר ממה שנדמה. עם הכלים הנכונים והליווי הנכון, את תתחילי להרגיש אחרת כבר אחרי המפגשים הראשונים.
+                        כבר אחרי מספר מפגשים נשים מספרות שהן מתחילות לחשוב אחרת, להגיב אחרת, ולהרגיש אחרת. תוך מספר שבועות — שיפור משמעותי בביטחון העצמי, ירידה בעומס הרגשי, ויכולת לקבל החלטות מתוך בהירות.
                     </p>
                     <blockquote class="promise-quote" data-reveal>
-                        "אני לא נותנת עצות. אני נותנת כלים שעובדים — כדי שתוכלי להרגיש שוב שליטה על החיים שלך."
+                        המטרה שלי ברורה: לא רק לדבר על הבעיה — אלא לתת לך כלים מעשיים שעובדים ביום יום. להרגיש חזקה יותר, רגועה יותר, ובשליטה על החיים שלך.
                     </blockquote>
                 </div>
 
                 <div class="promise-cards stagger-items">
                     <div class="promise-card" data-item>
                         <div class="promise-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                         </div>
                         <h3 class="promise-card-title">ביטחון עצמי</h3>
-                        <p class="promise-card-desc">תלמדי לסמוך על עצמך ולקבל החלטות מתוך חוזק ולא מתוך פחד</p>
+                        <p class="promise-card-desc">לסמוך על עצמך ועל הבחירות שלך</p>
                     </div>
                     <div class="promise-card" data-item>
                         <div class="promise-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                <line x1="12" y1="2" x2="12" y2="4" opacity="0.4"></line>
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
                         </div>
                         <h3 class="promise-card-title">שקט פנימי</h3>
-                        <p class="promise-card-desc">תפסיקי לרוץ על אוטומט ותתחילי לשמוע את עצמך מחדש</p>
+                        <p class="promise-card-desc">פחות עומס מחשבות, יותר רוגע אמיתי</p>
                     </div>
                     <div class="promise-card" data-item>
                         <div class="promise-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <line x1="12" y1="2" x2="12" y2="5"></line>
-                                <line x1="12" y1="19" x2="12" y2="22"></line>
-                                <line x1="2" y1="12" x2="5" y2="12"></line>
-                                <line x1="19" y1="12" x2="22" y2="12"></line>
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle><line x1="12" y1="2" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="22"></line><line x1="2" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="22" y2="12"></line></svg>
                         </div>
                         <h3 class="promise-card-title">החלטות ברורות</h3>
-                        <p class="promise-card-desc">תדעי מה את רוצה ותפעלי מתוך בהירות ומיקוד</p>
+                        <p class="promise-card-desc">להחליט בלי פחד, בלי לחץ, בלי בלבול</p>
                     </div>
                     <div class="promise-card" data-item>
                         <div class="promise-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22c4-2.5 7-5.5 7-10V5l-7-3-7 3v7c0 4.5 3 7.5 7 10z" opacity="0.3"></path>
-                                <path d="M17 8l-6.5 6.5L7 11" stroke-width="2"></path>
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                         </div>
                         <h3 class="promise-card-title">גבולות בריאים</h3>
-                        <p class="promise-card-desc">תלמדי להגיד לא בלי אשמה ולשמור על המרחב שלך</p>
+                        <p class="promise-card-desc">להגיד כן ולא בלי רגשות אשם</p>
                     </div>
                 </div>
             </div>
@@ -1428,20 +1263,18 @@
                 <div>
                     <p class="section-label" data-reveal>למה דווקא סימה</p>
                     <h2 class="authority-title" data-reveal>
-                        15 שנה של עבודה
+                        <em>15 שנה</em> של עבודה
                         <span class="thin">אמיתית עם אנשים</span>
                     </h2>
                     <p class="authority-bio" data-reveal>
-                        אני סימה אלימלך, מאמנת אישית ומנחת קבוצות עם ניסיון של למעלה מ-15 שנה בשטח. אני לא מאמינה בתיאוריות — אני מאמינה בכלים מעשיים שאפשר ליישם כאן ועכשיו. כל תהליך שאני מובילה הוא אישי, מותאם ומלווה צעד אחר צעד. המטרה שלי היא שתצאי מהתהליך עם יכולת אמיתית לנהל את החיים שלך — לא תלות בי.
+                        אני סימה אלימלך, ואני מלווה אנשים כבר שנה וחצי עשורים — בליווי פרטני ובמסגרות עירוניות וקהילתיות. עבדתי עם בני נוער, הורים ומבוגרים, ואני מתמחה בהעצמה אישית, בהתמודדות עם חרדות ובתקשורת בין־אישית. אני לא מלמדת תיאוריה. אני נותנת כלים שעובדים — מניסיון ישיר עם עשרות אנשים שהיו בדיוק במקום שלך.
                     </p>
                     <div class="authority-tags stagger-items" data-reveal>
-                        <span class="authority-tag" data-item>אימון אישי</span>
-                        <span class="authority-tag" data-item>הנחיית קבוצות</span>
-                        <span class="authority-tag" data-item>העצמה נשית</span>
-                        <span class="authority-tag" data-item>ניהול חרדות</span>
+                        <span class="authority-tag" data-item>העצמה אישית</span>
+                        <span class="authority-tag" data-item>חרדות</span>
+                        <span class="authority-tag" data-item>תקשורת בין־אישית</span>
                         <span class="authority-tag" data-item>הצבת גבולות</span>
-                        <span class="authority-tag" data-item>תקשורת בין-אישית</span>
-                        <span class="authority-tag" data-item>שינוי דפוסים</span>
+                        <span class="authority-tag" data-item>ביטחון עצמי</span>
                     </div>
                 </div>
 
@@ -1452,11 +1285,11 @@
                     </div>
                     <div class="stat-cell" data-item>
                         <div class="stat-num">עשרות</div>
-                        <div class="stat-label">לקוחות מרוצות</div>
+                        <div class="stat-label">אנשים שליוויתי</div>
                     </div>
                     <div class="stat-cell" data-item>
                         <div class="stat-num">פרטני</div>
-                        <div class="stat-label">ליווי אישי צמוד</div>
+                        <div class="stat-label">ליווי אחד על אחד</div>
                     </div>
                     <div class="stat-cell" data-item>
                         <div class="stat-num">עירוני</div>
@@ -1472,69 +1305,56 @@
         <div class="container">
             <div class="process-header">
                 <p class="section-label" data-reveal>מה כולל התהליך</p>
-                <h2 class="process-title" data-reveal>
-                    שלושה שלבים.
-                    <span class="thin">תוצאות אמיתיות.</span>
-                </h2>
+                <h2 class="process-title" data-reveal>שלושה שלבים. <span class="thin">תוצאות אמיתיות.</span></h2>
             </div>
+            <p class="process-subtitle" data-reveal>לא סתם שיחות — תהליך ברור עם כיוון, כלים ותוצאות</p>
 
             <div class="process-steps stagger-items">
                 <div class="process-step" data-item>
                     <span class="step-num">01</span>
                     <h3 class="step-title">מיפוי והבנה</h3>
-                    <p class="step-desc">
-                        שיחה מעמיקה שבה נבין יחד מאיפה את מגיעה, מה מכאיב, ומה באמת צריך להשתנות. בלי שיפוט, בלי לחץ — רק הקשבה והבנה.
-                    </p>
+                    <p class="step-desc">שיחת עומק שבה מבינים יחד מאיפה מגיע העומס, מה הדפוסים שמחזיקים אותך במקום, ומה את באמת רוצה להרגיש.</p>
                 </div>
                 <div class="process-step" data-item>
                     <span class="step-num">02</span>
                     <h3 class="step-title">כלים ותרגול</h3>
-                    <p class="step-desc">
-                        נעבוד יחד עם כלים מעשיים ומוכחים שאפשר ליישם ביום יום. תרגול, משימות קטנות, ושינויים שמורגשים כבר בין מפגש למפגש.
-                    </p>
+                    <p class="step-desc">את מקבלת כלים פרקטיים מעולם האימון האישי — להתמודדות עם מחשבות, בניית ביטחון עצמי, והצבת גבולות בריאים.</p>
                 </div>
                 <div class="process-step" data-item>
                     <span class="step-num">03</span>
                     <h3 class="step-title">שינוי שנשאר</h3>
-                    <p class="step-desc">
-                        בניית הרגלים חדשים ויציבים שנשארים לאורך זמן. המטרה: שתסיימי את התהליך עם עצמאות מלאה ויכולת לנהל את עצמך.
-                    </p>
+                    <p class="step-desc">בונים הרגלים חדשים של חשיבה והתנהגות שנשארים לאורך זמן — כלים שעובדים גם הרבה אחרי שהתהליך נגמר.</p>
                 </div>
             </div>
 
             <div class="process-extras stagger-items">
                 <div class="extra-item" data-item>
                     <div class="extra-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </div>
-                    <span class="extra-text">מפגשים אישיים</span>
+                    <span class="extra-title">מפגשים אישיים</span>
+                    <span class="extra-desc">ליווי שנבנה בדיוק בשבילך</span>
                 </div>
                 <div class="extra-item" data-item>
                     <div class="extra-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
                     </div>
-                    <span class="extra-text">כלים מעשיים</span>
+                    <span class="extra-title">כלים מעשיים</span>
+                    <span class="extra-desc">תרגילים שאפשר ליישם מיד</span>
                 </div>
                 <div class="extra-item" data-item>
                     <div class="extra-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     </div>
-                    <span class="extra-text">זיהוי דפוסים</span>
+                    <span class="extra-title">זיהוי דפוסים</span>
+                    <span class="extra-desc">להבין מה באמת מחזיק אותך</span>
                 </div>
                 <div class="extra-item" data-item>
                     <div class="extra-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
                     </div>
-                    <span class="extra-text">תוצאות מהירות</span>
+                    <span class="extra-title">תוצאות מהירות</span>
+                    <span class="extra-desc">שינוי מורגש אחרי מספר מפגשים</span>
                 </div>
             </div>
         </div>
@@ -1544,7 +1364,7 @@
     <section class="testimonials-section" id="testimonials">
         <div class="container">
             <div class="testimonials-header">
-                <p class="section-label" data-reveal>מה אומרות נשים</p>
+                <p class="testimonials-label" data-reveal>מה אומרות נשים שעברו את התהליך</p>
                 <h2 class="testimonials-title" data-reveal>
                     הן היו בדיוק
                     <span class="thin">במקום שלך.</span>
@@ -1560,9 +1380,7 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </div>
-                    <p class="testimonial-quote">
-                        הגעתי לסימה עם תחושה שאני לא שולטת בשום דבר. תוך כמה שבועות הרגשתי שינוי אמיתי — פחות מחשבות טורדניות, יותר שקט, ויכולת אמיתית לעצור ולנשום לפני שאני מגיבה. סימה נתנה לי כלים שאני משתמשת בהם כל יום.
-                    </p>
+                    <p class="testimonial-quote">הגעתי לסימה עם תחושה שאני לא שולטת בשום דבר. תוך כמה מפגשים התחלתי להבין את הדפוסים שלי ולשנות אותם. היום אני מקבלת החלטות מתוך בהירות ולא מתוך פחד.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">ל׳</div>
                         <div>
@@ -1580,9 +1398,7 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </div>
-                    <p class="testimonial-quote">
-                        חשבתי שחרדות זה פשוט חלק ממי שאני. סימה עזרה לי להבין שזה לא גזירת גורל — ושאפשר לשנות. היום אני מרגישה חופשייה בצורה שלא הכרתי. הליווי שלה היה מדויק, חם ומקצועי.
-                    </p>
+                    <p class="testimonial-quote">חשבתי שחרדות זה פשוט חלק ממי שאני. סימה לימדה אותי שזה דפוס שאפשר לשנות. הכלים שקיבלתי ממנה משמשים אותי כל יום — בעבודה, בזוגיות, עם הילדים.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">ד׳</div>
                         <div>
@@ -1600,9 +1416,7 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </div>
-                    <p class="testimonial-quote">
-                        הייתי בתקופה של שינוי ובלבול מוחלט. סימה עזרה לי לשים סדר בכאוס, להבין מה באמת חשוב לי, ולהתחיל לפעול. היום אני מקבלת החלטות ממקום אחר לגמרי — ממקום של כוח, לא של פחד.
-                    </p>
+                    <p class="testimonial-quote">הייתי בתקופה של שינוי ובלבול מוחלט. סימה עזרה לי לראות דברים שלא הצלחתי לראות לבד, ולבנות מחדש את הביטחון שלי. אני מרגישה אישה אחרת.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">מ׳</div>
                         <div>
@@ -1620,38 +1434,22 @@
         <div class="cta-glow" aria-hidden="true"></div>
         <div class="container cta-content">
             <p class="section-label" style="color: var(--copper-light); text-align: center;" data-reveal>הצעד הבא שלך</p>
-            <h2 class="cta-title" data-reveal>
-                מוכנה לנקודת<br>המפנה שלך?
-            </h2>
-            <p class="cta-desc" data-reveal>
-                השיחה הראשונה היא הצעד הכי חשוב. את לא צריכה לדעת את כל התשובות — רק להיות מוכנה להתחיל.
-            </p>
+            <h2 class="cta-title" data-reveal>מוכנה לנקודת המפנה שלך?</h2>
+            <p class="cta-desc" data-reveal>השיחה הראשונה היא הצעד הכי חשוב. את לא צריכה לדעת את כל התשובות — רק להיות מוכנה להתחיל.</p>
             <p class="cta-note" data-reveal>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 המקומות מוגבלים — אני מלווה מספר מצומצם של נשים בו זמנית
             </p>
             <a href="https://www.instagram.com/sima2512/" target="_blank" rel="noopener noreferrer" class="cta-btn" data-magnetic>
                 <span>שלחי לי הודעה עכשיו</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             </a>
             <div class="cta-socials" data-reveal>
                 <a href="https://www.instagram.com/sima2512/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
                 <a href="#" class="social-link" aria-label="Facebook">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                 </a>
             </div>
         </div>
@@ -1668,9 +1466,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            /* ========================
-               LENIS SMOOTH SCROLL
-               ======================== */
+            // LENIS SMOOTH SCROLL
             const lenis = new Lenis({
                 duration: 1.2,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -1685,16 +1481,11 @@
             }
             requestAnimationFrame(raf);
 
-            // Sync Lenis with GSAP ScrollTrigger
             lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => {
-                lenis.raf(time * 1000);
-            });
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
             gsap.ticker.lagSmoothing(0);
 
-            /* ========================
-               SMART HEADER
-               ======================== */
+            // SMART HEADER
             const header = document.getElementById('siteHeader');
             let lastY = 0;
             let ticking = false;
@@ -1703,11 +1494,8 @@
                 const y = window.scrollY;
                 if (y > 80) {
                     header.classList.add('scrolled');
-                    if (y > lastY && y > 300) {
-                        header.classList.add('hidden');
-                    } else {
-                        header.classList.remove('hidden');
-                    }
+                    if (y > lastY && y > 300) header.classList.add('hidden');
+                    else header.classList.remove('hidden');
                 } else {
                     header.classList.remove('scrolled', 'hidden');
                 }
@@ -1716,18 +1504,13 @@
             }
 
             window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(updateHeader);
-                    ticking = true;
-                }
+                if (!ticking) { requestAnimationFrame(updateHeader); ticking = true; }
             }, { passive: true });
 
-            /* ========================
-               GSAP SCROLL ANIMATIONS
-               ======================== */
+            // GSAP
             gsap.registerPlugin(ScrollTrigger);
 
-            // Single reveals
+            // Reveal animations
             gsap.utils.toArray('[data-reveal]').forEach(el => {
                 gsap.from(el, {
                     y: 50,
@@ -1746,7 +1529,6 @@
             gsap.utils.toArray('.stagger-items').forEach(container => {
                 const items = container.querySelectorAll('[data-item]');
                 if (!items.length) return;
-
                 gsap.from(items, {
                     y: 40,
                     opacity: 0,
@@ -1761,60 +1543,35 @@
                 });
             });
 
-            // Hero entrance — cinematic stagger
-            const heroTimeline = gsap.timeline({ delay: 0.3 });
-            heroTimeline
-                .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
+            // Hero cinematic entrance
+            gsap.set(['.hero-label', '.hero-title', '.hero-desc', '.hero-actions'], { y: 30 });
+            const heroTL = gsap.timeline({ delay: 0.3 });
+            heroTL
+                .to('.hero-label', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
                 .to('.hero-title', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
                 .to('.hero-desc', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.4')
                 .to('.hero-actions', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.3');
 
-            // Set initial hero states
-            gsap.set(['.hero-eyebrow', '.hero-title', '.hero-desc', '.hero-actions'], {
-                y: 30
-            });
-
-            /* ========================
-               MAGNETIC BUTTONS
-               ======================== */
+            // Magnetic buttons (desktop only)
             if (window.matchMedia('(pointer: fine)').matches) {
                 document.querySelectorAll('[data-magnetic]').forEach(btn => {
-                    const strength = 25;
-
                     btn.addEventListener('mousemove', (e) => {
                         const rect = btn.getBoundingClientRect();
                         const x = e.clientX - rect.left - rect.width / 2;
                         const y = e.clientY - rect.top - rect.height / 2;
-
-                        gsap.to(btn, {
-                            x: x * 0.3,
-                            y: y * 0.3,
-                            duration: 0.4,
-                            ease: 'power2.out'
-                        });
+                        gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: 'power2.out' });
                     });
-
                     btn.addEventListener('mouseleave', () => {
-                        gsap.to(btn, {
-                            x: 0,
-                            y: 0,
-                            duration: 0.7,
-                            ease: 'elastic.out(1, 0.3)'
-                        });
+                        gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
                     });
                 });
             }
 
-            /* ========================
-               SMOOTH ANCHOR LINKS
-               ======================== */
+            // Smooth anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', (e) => {
                     const target = document.querySelector(anchor.getAttribute('href'));
-                    if (target) {
-                        e.preventDefault();
-                        lenis.scrollTo(target, { offset: -80 });
-                    }
+                    if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -80 }); }
                 });
             });
 
