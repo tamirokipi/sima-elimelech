@@ -31,8 +31,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
         }
-
 
         :root {
             --black: #0A0A0A;
@@ -1489,6 +1492,54 @@
             <p class="footer-text">&copy; 2025 נקודת מפנה | סימה אלימלך. כל הזכויות שמורות.</p>
         </div>
     </footer>
+
+    <!-- ==================== PROTECTION ==================== -->
+    <script>
+        (function(){
+            // 1. Block right-click
+            document.addEventListener('contextmenu', function(e){ e.preventDefault(); }, true);
+
+            // 2. Block text selection
+            document.addEventListener('selectstart', function(e){ e.preventDefault(); }, true);
+
+            // 3. Block drag
+            document.addEventListener('dragstart', function(e){ e.preventDefault(); }, true);
+
+            // 4. Block copy/cut/paste
+            ['copy','cut','paste'].forEach(function(evt){
+                document.addEventListener(evt, function(e){ e.preventDefault(); }, true);
+            });
+
+            // 5. Block keyboard shortcuts (F12, Ctrl+Shift+I/J/C, Ctrl+U/S/A/P)
+            document.addEventListener('keydown', function(e) {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey) ||
+                    (e.ctrlKey && ['u','U','s','S','a','A','p','P','c','C','j','J'].includes(e.key)) ||
+                    (e.metaKey && e.altKey) ||
+                    (e.metaKey && ['u','U','s','S','a','A','p','P'].includes(e.key))
+                ) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }, true);
+
+            // 6. Disable console methods quietly
+            var _noop = function(){};
+            ['log','warn','error','info','debug','table','trace','dir','dirxml',
+             'group','groupCollapsed','groupEnd','time','timeEnd','count','assert'].forEach(function(m){
+                try { console[m] = _noop; } catch(e){}
+            });
+
+            // 7. Block iframe embedding
+            if (window.top !== window.self) { window.top.location = window.self.location; }
+
+            // 8. Block print (hide content during print)
+            window.addEventListener('beforeprint', function(){ document.body.style.display = 'none'; });
+            window.addEventListener('afterprint', function(){ document.body.style.display = ''; });
+        })();
+    </script>
 
     <!-- ==================== SCRIPTS ==================== -->
     <script>
